@@ -9,17 +9,17 @@ import numpy as np
 
 
 def file2mess(mess_path):
-    _, filename = os.path.split(mess_path)                          # 文件名
-    ext = filename.split('.')[-1]                                   # 后缀名
-    ext_bin = libnum.s2b(ext).zfill(32)                             # 二进制后缀名(32位)
+    _, filename = os.path.split(mess_path)                          # Filename
+    ext = filename.split('.')[-1]                                   # Ext
+    ext_bin = libnum.s2b(ext).zfill(32)                             # Ext_bin
     with open(mess_path, 'rb') as f:
         file_data = f.read()
         file_data_b64 = base64.b64encode(file_data)
-    file_data_bin = libnum.s2b(file_data_b64)                       # 二进制消息内容
-    mess_len_bin = libnum.s2b(str(len(file_data_bin))).zfill(160)    # 二进制消息长度
+    file_data_bin = libnum.s2b(file_data_b64)                       # mess bin
+    mess_len_bin = libnum.s2b(str(len(file_data_bin))).zfill(160)    # mess len
 
-    ext_list = ext_bin.replace('', ' ')[1:-1].split(' ')            # 文件后缀(32位)
-    mess_len_list = mess_len_bin.replace('', ' ')[1:-1].split(' ')  # 消息长度(160位)
+    ext_list = ext_bin.replace('', ' ')[1:-1].split(' ')            # extbin len (32位)
+    mess_len_list = mess_len_bin.replace('', ' ')[1:-1].split(' ')  # messbin len(160位)
     file_data_list = file_data_bin.replace('', ' ')[1:-1].split(' ')
 
     mess = np.array(ext_list + mess_len_list + file_data_list).astype(int)
